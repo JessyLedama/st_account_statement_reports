@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="asr_vendor_statement">
+
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+
+                <t t-set="company" t-value="doc.company_id"/>
+
+                <main>
+                    <div class="page">
+
+                        <!-- Header -->
+                        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                            <div>
+                                <h2>Vendor Statement</h2>
+                                <strong>Vendor:</strong>
+                                <span t-esc="doc.partner_id.name"/>
+                            </div>
+
+                            <div style="text-align:right;">
+                                <strong>Period:</strong><br/>
+                                <span t-esc="doc.date_from"/> —
+                                <span t-esc="doc.date_to"/>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Reference</th>
+                                    <!-- <th>Reference</th> -->
+                                    <th>Narration</th>
+                                    <!-- <th>Due Date</th> -->
+                                    <!-- <th>Currency</th> -->
+                                    <th>Amount in Currency</th>
+                                    <!-- <th class="text-end">Debit</th> -->
+                                    <!-- <th class="text-end">Credit</th> -->
+                                    <!-- <th class="text-end">Balance</th> -->
+                                    <th class="text-end" style="font-weight:bold; background:#f2f2f2;">Balance in Currency</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-foreach="doc.line_ids" t-as="l">
+                                    <tr>
+                                        <td><t t-esc="l.date"/></td>
+                                        <td><t t-esc="l.move"/></td>
+                                        <!-- <td><t t-esc="l.reference"/></td> -->
+                                        <td><t t-esc="l.narration"/></td>
+                                        <!-- <td><t t-esc="l.due_date"/></td> -->
+
+                                        <!-- <td><t t-esc="l.currency_id.name"/></td> -->
+
+                                        <td><t t-esc="l.amount_currency" t-options="{'widget':'monetary','display_currency':doc.currency_id}"/></td>
+
+                                        <!-- <td class="text-end">
+                                            <span t-field="l.debit"
+                                                  t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                        </td>
+
+                                        <td class="text-end">
+                                            <span t-field="l.credit"
+                                                  t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                        </td>
+
+                                        <td class="text-end">
+                                            <span t-field="l.balance"
+                                                  t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                        </td> -->
+
+                                        <td class="text-end" style="font-weight:bold; background:#f2f2f2;">
+                                            <span t-field="l.balance_currency"
+                                                  t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+
+                            <tfoot>
+                                <tr style="font-weight:bold; background:#f2f2f2;">
+                                    <!-- <td colspan="1" class="text-end">Totals</td>
+
+                                    <td class="text-end">
+                                        <span t-esc="sum(doc.line_ids.mapped('debit'))"
+                                            t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                                </td>
+
+                                                <td class="text-end">
+                                        <span t-esc="sum(doc.line_ids.mapped('credit'))"
+                                            t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                                </td>
+
+                                            <td class="text-end">
+                                        <span t-field="doc.final_balance"
+                                            t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                    </td> -->
+
+                                </tr>
+
+                                <!-- Final Balance -->
+                                <!-- <tr style="font-weight:bold;">
+                                    <td colspan="4" class="text-end">Final Balance</td>
+                                    <td class="text-end">
+                                        <span t-field="doc.final_balance"
+                                            t-options="{'widget':'monetary','display_currency':doc.company_id.currency_id}"/>
+                                    </td>
+                                </tr> -->
+
+                                <!-- Balance Type -->
+                                <tr style="font-weight:bold;">
+                                    <td colspan="4" class="text-end">Balance Type</td>
+                                    <td class="text-end">
+                                        <span t-esc="doc.balance_type"/>
+                                    </td>
+                                </tr>
+
+                                <!-- Final Balance in Currency -->
+                                <tr style="font-weight:bold;">
+                                    <td colspan="4" class="text-end">Final Balance in Currency</td>
+                                    <td class="text-end">
+                                        <span t-field="doc.final_balance_currency"
+                                            t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </main>
+
+            </t>
+        </t>
+
+    </template>
+</odoo>
