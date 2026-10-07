@@ -14,7 +14,7 @@
         - Form views for statement review
     """,
     "author": "Jessy Ledama",
-    "website": "https://simitechnologies.co.ke",
+    "website": "https://simitechnologies.ke",
     "company": "SIMI Technologies",
     "depends": ["account"],
 
